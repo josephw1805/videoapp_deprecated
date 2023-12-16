@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "Cyndi Wang",
+    "email": "cyndi.wang@yopmail.com",
+    "emailVerified": "2023-12-10T19:53:30Z",
+    "image": "/image/upload/Cloudinary_data/v1702409080/Users/cyndiwang.png",
+    "backgroundImage": "/image/upload/v1702409080/Cloudinary_data/Users/cyndibackground.png",
+    "handle": "@CindiWang",
+    "description": "王心凌 Cyndi Wang"
+  },
+  {
+    "id": "2",
+    "name": "Travel Bear",
+    "email": "travel.bear@yopmail.com",
+    "emailVerified": "2023-12-12T18:56:55Z",
+    "image": "/image/upload/v1702409080/Cloudinary_data/Users/xfmnk9uvcz7enx0dbjc6.jpg",
+    "backgroundImage": "/image/upload/v1702409080/Cloudinary_data/Users/fs5ezroxpaixgr5roate.jpg",
+    "handle": "@TravelBear",
+    "description": "I am traveling with my buddy."
+  }
+]

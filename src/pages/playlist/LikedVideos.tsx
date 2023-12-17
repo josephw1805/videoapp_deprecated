@@ -20,7 +20,7 @@ const LikedVideos: NextPage = () => {
   const Error = () => {
     if (isLoading) {
       return <LoadingMessage />;
-    } else if (error || !data) {
+    } else if (error ?? !data) {
       <ErrorMessage
         message="No like videos"
         description="Go like some videos."

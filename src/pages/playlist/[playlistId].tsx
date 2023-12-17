@@ -18,7 +18,7 @@ const Playlist: NextPage = () => {
   const Error = () => {
     if (isLoading) {
       return <LoadingMessage />;
-    } else if (error || !data) {
+    } else if (error ?? !data) {
       <ErrorMessage
         message="No Playlists are available"
         description="Create a playlist."

@@ -20,7 +20,7 @@ const History: NextPage = () => {
   const Error = () => {
     if (isLoading) {
       return <LoadingMessage />;
-    } else if (error || !data) {
+    } else if (error ?? !data) {
       <ErrorMessage
         message="No Current History"
         description="Watching some videos to add to history."

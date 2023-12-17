@@ -20,7 +20,7 @@ const ProfileAnnouncements: NextPage = () => {
   const { data, isLoading, error, refetch } =
     api.announcement.getAnnoucementsByUserId.useQuery({
       id: userId as string,
-      viewerId: sessionData?.user.id as string,
+      viewerId: sessionData?.user?.id ?? "",
     });
   const [announcementInput, setAnnouncementInput] = useState("");
 
@@ -115,7 +115,7 @@ const ProfileAnnouncements: NextPage = () => {
               return (
                 <li className="pt-4" key={announcement.id}>
                   <div className="flex gap-2">
-                    <UserImage image={user.image || ""} />
+                    <UserImage image={user.image ?? ""} />
                     <div className="flex w-full flex-col ">
                       <div className="flex flex-col">
                         <div className="flex flex-row items-start gap-2 text-xs">

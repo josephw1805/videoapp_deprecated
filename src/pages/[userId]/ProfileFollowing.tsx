@@ -25,7 +25,7 @@ const ProfileFollowings: NextPage = () => {
   });
 
   const errorTypes =
-    !user?.followings ?? (error || user?.followings.length === 0);
+    !user?.followings ?? error ?? user?.followings.length === 0;
 
   const Error = () => {
     if (isLoading) {

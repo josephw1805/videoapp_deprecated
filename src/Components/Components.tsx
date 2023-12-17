@@ -7,8 +7,14 @@ export {
   UserImage,
   UserName,
 } from "./VideoComponent";
+
 export { Thumbnail } from "./Thumbnail";
 export { LoadingMessage, ErrorMessage } from "./ErrorMessage";
+export {
+  SinglePlaylist,
+  MultiColumnPlaylist,
+  PlaylistPage,
+} from "./PlaylistComponent";
 export { default as Navbar } from "./Navbar";
 export { default as Sidebar } from "./Sidebar";
 export { default as Layout } from "./Layout";

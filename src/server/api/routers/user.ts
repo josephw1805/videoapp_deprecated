@@ -79,4 +79,51 @@ export const userRouter = createTRPCRouter({
         return follow;
       }
     }),
+
+  getUserFollowings: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        viewerId: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          followings: {
+            include: {
+              following: {
+                include: {
+                  followings: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      if (!user) {
+        return null;
+      }
+
+      const followings = user.followings;
+      const followingsWithViewerFollowedStatus = await Promise.all(
+        followings.map(async (following) => {
+          let viewerHasFollowed = false;
+          if (input.viewerId && input.viewerId !== "") {
+            viewerHasFollowed = !!(await ctx.db.followEngagement.findFirst({
+              where: {
+                followingId: following.following.id,
+                followerId: input.viewerId,
+              },
+            }));
+          }
+          return { ...following, viewerHasFollowed };
+        }),
+      );
+
+      return { ...user, followings: followingsWithViewerFollowedStatus };
+    }),
 });

@@ -1,4 +1,5 @@
-import { EngagementType } from "@prisma/client";
+import { EngagementType, PrismaClient } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
@@ -6,6 +7,25 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+type Context = {
+  db: PrismaClient;
+};
+
+const checkVideOwnership = async (ctx: Context, id: string, userId: string) => {
+  const video = await ctx.db.video.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!video || video.userId !== userId) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Video not found",
+    });
+  }
+  return video;
+};
 
 export const videoRouter = createTRPCRouter({
   getVideoById: publicProcedure
@@ -263,5 +283,75 @@ export const videoRouter = createTRPCRouter({
         },
       });
       return playlistHasVideo;
+    }),
+
+  publishVideo: protectedProcedure
+    .input(z.object({ id: z.string(), userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const video = await checkVideOwnership(ctx, input.id, input.userId);
+      const publishVideo = await ctx.db.video.update({
+        where: {
+          id: video.id,
+        },
+        data: {
+          publish: !video.publish,
+        },
+      });
+      return publishVideo;
+    }),
+
+  deleteVideo: protectedProcedure
+    .input(z.object({ id: z.string(), userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const video = await checkVideOwnership(ctx, input.id, input.userId);
+      const deleteVideo = await ctx.db.video.delete({
+        where: {
+          id: video.id,
+        },
+      });
+      return deleteVideo;
+    }),
+
+  updateVideo: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        userId: z.string(),
+        title: z.string(),
+        description: z.string(),
+        thumbnailUrl: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const video = await checkVideOwnership(ctx, input.id, input.userId);
+      const updateVideo = await ctx.db.video.update({
+        where: {
+          id: video.id,
+        },
+        data: {
+          title: input.title ?? video.title,
+          description: input.description ?? video.description,
+          thumbnailUrl: input.thumbnailUrl ?? video.thumbnailUrl,
+        },
+      });
+      return updateVideo;
+    }),
+
+  createVideo: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        videoUrl: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const video = await ctx.db.video.create({
+        data: {
+          userId: input.userId,
+          videoUrl: input.videoUrl,
+          publish: false,
+        },
+      });
+      return video;
     }),
 });

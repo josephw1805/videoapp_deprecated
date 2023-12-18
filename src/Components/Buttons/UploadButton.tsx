@@ -19,7 +19,7 @@ export default function UploadButton({ refetch }: { refetch: () => Promise<unkno
       secure_url: string;
     };
     const videoData = {
-      userId: sessionData?.user.id as string,
+      userId: sessionData?.user.id ?? "",
       videoUrl: "",
     };
 

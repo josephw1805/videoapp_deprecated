@@ -27,7 +27,7 @@ const Dashboard: NextPage = () => {
   const userId = sessionData?.user.id;
 
   const { data, isLoading, error, refetch } =
-    api.user.getDashboardData.useQuery(userId as string);
+    api.user.getDashboardData.useQuery(userId ?? "");
 
   const Error = () => {
     if (isLoading) {

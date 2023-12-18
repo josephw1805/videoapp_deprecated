@@ -7,7 +7,7 @@ export {
   UserImage,
   UserName,
 } from "./VideoComponent";
-
+export { Content } from "./Content";
 export { Thumbnail } from "./Thumbnail";
 export { LoadingMessage, ErrorMessage } from "./ErrorMessage";
 export {

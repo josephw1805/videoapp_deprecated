@@ -15,7 +15,7 @@ const Settings: NextPage = () => {
   const userId = sessionData?.user.id;
   const addUserUpdateMutation = api.user.updateUser.useMutation();
   const { data, refetch } = api.user.getChannelById.useQuery({
-    id: userId as string,
+    id: userId ?? "",
   });
   const channel = data?.user;
   const [user, setUser] = useState({
@@ -293,7 +293,7 @@ export function CropImageModal({
     };
     const userData = {
       id: channel?.id,
-      [imageType]: channel[imageType] || undefined,
+      [imageType]: channel[imageType] ?? undefined,
     };
 
     const formData = new FormData();
@@ -346,7 +346,7 @@ export function CropImageModal({
               className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
               width="2000"
               height="2000"
-              src={channel?.image || "/profile.jpg"}
+              src={channel?.image ?? "/profile.jpg"}
               alt="error"
             />
           </label>
@@ -363,7 +363,7 @@ export function CropImageModal({
             />
             <Image
               className="h-32 w-full object-cover lg:h-64"
-              src={channel.backgroundImage || "/background.jpg"}
+              src={channel.backgroundImage ?? "/background.jpg"}
               width={2000}
               height={2000}
               alt="error"

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { PlusCircleIcon } from '@heroicons/react/24/solid'
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+import { Player } from 'video-react';
 import { api } from "~/utils/api";
+import 'video-react/dist/video-react.css';
 
 import Link from "next/link";
 import { type NextPage } from "next";
@@ -25,15 +25,11 @@ import {
 } from "~/Components/Components";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Image from "next/image";
 
 const VideoPage: NextPage = () => {
   const router = useRouter();
   const { videoId } = router.query;
   const { data: sessionData } = useSession();
-
-  const [play, setPlay] = useState(false);
-
   const {
     data: videoData,
     isLoading: videoLoading,
@@ -112,30 +108,9 @@ const VideoPage: NextPage = () => {
           ) : (
             <div className="w-full sm:px-4 lg:w-3/5 ">
               <div className="py-4">
-              {play ? (
-                <ReactPlayer
-                  controls={true}
-                  style={{ borderRadius: "1rem", overflow: "hidden" }}
-                  width={"100%"}
-                  height={"50%"}
-                  autoPlay={play}
-                  url={video.videoUrl ?? ""}
-                />) : (<div className="w-full h-header rounded-lg overflow-hidden relative">
-                <div className="absolute top-0 left-0 bottom-0 right-0 bg-main bg-opacity-30 flex-colo">
-                  <button
-                    onClick={() => setPlay(true)}
-                    className="bg-white text-subMain flex-colo border border-subMain rounded-full w-20 h-20 font-medium text-xl"
-                  >
-                    <PlusCircleIcon className="h-6 w-6" />
-                  </button>
-                </div>
-                <Image
-                  src={video.thumbnailUrl ?? ''}
-                  alt={video.title ?? ''}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>)
-          })
+                <Player>
+                  <source src={video.videoUrl ?? ""} />
+                </Player>
               </div>
               <div className="flex space-x-3 rounded-2xl border border-gray-200 p-4 shadow-sm">
                 <div className="min-w-0 flex-1 space-y-3 ">

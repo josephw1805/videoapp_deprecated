@@ -24,7 +24,7 @@ const Help: NextPage = () => {
     },
     {
       question: "Can I Download Videos from VidChill ?",
-      answer: "VidChill support direct video downloading",
+      answer: "VidChill does not support direct video downloading",
     },
     {
       question: "Is VidChill Free to Use?",

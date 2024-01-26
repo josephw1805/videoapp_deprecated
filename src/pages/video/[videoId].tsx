@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Player } from 'video-react';
 import { api } from "~/utils/api";
 import 'video-react/dist/video-react.css';
@@ -50,7 +50,7 @@ const VideoPage: NextPage = () => {
     isLoading: sidebarLoading,
     error: sidebarError,
     refetch: refetchSidebarVideos,
-  } = api.video.getRandomVideos.useQuery(20, {
+  } = api.video.getRandomVideos.useQuery(15, {
     enabled: false, // this query will not run automatically
   });
   const addViewMutation = api.videoEngagement.addViewCount.useMutation();

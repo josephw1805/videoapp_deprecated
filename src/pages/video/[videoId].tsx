@@ -50,7 +50,7 @@ const VideoPage: NextPage = () => {
     isLoading: sidebarLoading,
     error: sidebarError,
     refetch: refetchSidebarVideos,
-  } = api.video.getRandomVideos.useQuery(15, {
+  } = api.video.getRandomVideos.useQuery(10, {
     enabled: false, // this query will not run automatically
   });
   const addViewMutation = api.videoEngagement.addViewCount.useMutation();

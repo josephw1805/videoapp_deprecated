@@ -1,3 +1,6 @@
+# DEPRECATED
+This repository is deprecated and no loger in support. The new updated repository is in [videoapp](https://github.com/josephw1805/VideoApp)
+
 # Tech Stack
 This app is build using T3 Stack - TypeScript, Next JS, Tailwind CSS, Next Auth, Prisma.
 The database is deployed on PlanetScale.
